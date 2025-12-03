@@ -29,7 +29,7 @@
   { cc: "BWP", symbol: "P", name: "Botswana pula" },
   { cc: "BYR", symbol: "Br", name: "Belarusian ruble" },
   { cc: "BZD", symbol: "BZ$", name: "Belize dollar" },
-  { cc: "CAD", symbol: "$", name: "Canadian dollar" },
+  { cc: "CAD", symbol: "CA$", name: "Canadian dollar" },
   { cc: "CDF", symbol: "F", name: "Congolese franc" },
   { cc: "CHF", symbol: "Fr.", name: "Swiss franc" },
   { cc: "CLP", symbol: "$", name: "Chilean peso" },
