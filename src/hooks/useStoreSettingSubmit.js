@@ -89,6 +89,22 @@ const useStoreSettingSubmit = (id) => {
           cloudinary_api_key: data.cloudinary_api_key,
           cloudinary_api_secret: data.cloudinary_api_secret,
           cloudinary_upload_preset: data.cloudinary_upload_preset,
+          // Warehouse/Store Origin Address
+          warehouse_name: data.warehouse_name,
+          warehouse_address_line1: data.warehouse_address_line1,
+          warehouse_city: data.warehouse_city,
+          warehouse_state: data.warehouse_state,
+          warehouse_postal_code: data.warehouse_postal_code,
+          warehouse_country: data.warehouse_country,
+          warehouse_phone: data.warehouse_phone,
+          warehouse_email: data.warehouse_email,
+          // Product Defaults
+          default_product_weight: data.default_product_weight || 0.5,
+          default_product_length: data.default_product_length || 10,
+          default_product_width: data.default_product_width || 10,
+          default_product_height: data.default_product_height || 5,
+          default_weight_unit: data.default_weight_unit || "kg",
+          default_dim_unit: data.default_dim_unit || "cm",
         },
       };
 
@@ -170,6 +186,22 @@ const useStoreSettingSubmit = (id) => {
           setValue("cloudinary_api_key", res.cloudinary_api_key);
           setValue("cloudinary_api_secret", res.cloudinary_api_secret);
           setValue("cloudinary_upload_preset", res.cloudinary_upload_preset);
+          // Set warehouse fields
+          setValue("warehouse_name", res.warehouse_name);
+          setValue("warehouse_address_line1", res.warehouse_address_line1);
+          setValue("warehouse_city", res.warehouse_city);
+          setValue("warehouse_state", res.warehouse_state);
+          setValue("warehouse_postal_code", res.warehouse_postal_code);
+          setValue("warehouse_country", res.warehouse_country);
+          setValue("warehouse_phone", res.warehouse_phone);
+          setValue("warehouse_email", res.warehouse_email);
+          // Set product default fields
+          setValue("default_product_weight", res.default_product_weight || 0.5);
+          setValue("default_product_length", res.default_product_length || 10);
+          setValue("default_product_width", res.default_product_width || 10);
+          setValue("default_product_height", res.default_product_height || 5);
+          setValue("default_weight_unit", res.default_weight_unit || "kg");
+          setValue("default_dim_unit", res.default_dim_unit || "cm");
         }
       } catch (err) {
         notifyError(err?.response?.data?.message || err.message);

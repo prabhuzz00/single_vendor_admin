@@ -530,8 +530,8 @@ const StoreSetting = () => {
                   </div>
                 </div> */}
 
-                {/* Google key section */}
-                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                {/* COMMENTED OUT - Google Login section */}
+                {/* <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <Label label={t("EnableGoogleLogin")} />
                   <div className="sm:col-span-4">
                     <SwitchToggle
@@ -578,9 +578,12 @@ const StoreSetting = () => {
                       <Error errorName={errors.google_secret} />
                     </div>
                   </div>
-                </div>
+                </div> */}
+                {/* END COMMENTED - Google Login section */}
 
-                {/* Github key section start*/}
+                {/* COMMENTED OUT - Github Login section */}
+                {/* <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <Label label="Enable Github Login" />
                 <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <Label label="Enable Github Login" />
                   <div className="sm:col-span-4">
@@ -628,10 +631,12 @@ const StoreSetting = () => {
                       <Error errorName={errors.github_secret} />
                     </div>
                   </div>
-                </div>
-                {/* Github key section end*/}
+                </div> */}
+                {/* END COMMENTED - Github Login section */}
 
-                {/* Facebook key section start*/}
+                {/* COMMENTED OUT - Facebook Login section */}
+                {/* <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <Label label="Enable Facebook Login" />
                 <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <Label label="Enable Facebook Login" />
                   <div className="sm:col-span-4">
@@ -679,11 +684,12 @@ const StoreSetting = () => {
                       <Error errorName={errors.facebook_secret} />
                     </div>
                   </div>
-                </div>
+                </div> */}
+                {/* END COMMENTED - Facebook Login section */}
 
-                {/* Facebook key section end*/}
-
-                {/* Google Analytics section start */}
+                {/* COMMENTED OUT - Google Analytics section */}
+                {/* <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <Label label={t("EnableGoggleAnalytics")} />
                 <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <Label label={t("EnableGoggleAnalytics")} />
                   <div className="sm:col-span-4">
@@ -719,8 +725,8 @@ const StoreSetting = () => {
                     />
                     <Error errorName={errors.google_analytic_key} />
                   </div>
-                </div>
-                {/* Google Analytics section end */}
+                </div> */}
+                {/* END COMMENTED - Google Analytics section */}
 
                 {/* FB Pixel  section start */}
                 {/* <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
@@ -763,9 +769,10 @@ const StoreSetting = () => {
               <Error errorName={errors.fb_pixel_key} />
             </div>
           </div> */}
-                {/* FB Pixel  section end */}
 
-                {/* EnableTawkChat  section start */}
+                {/* COMMENTED OUT - Tawk Chat section */}
+                {/* <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <Label label={t("EnableTawkChat")} />
                 <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <Label label={t("EnableTawkChat")} />
                   <div className="sm:col-span-4">
@@ -813,9 +820,223 @@ const StoreSetting = () => {
                       <Error errorName={errors.tawk_chat_widget_id} />
                     </div>
                   </div>
+                </div> */}
+                {/* END COMMENTED - Tawk Chat section */}
+
+                {/* Warehouse/Store Origin Address Section Start */}
+                <div className="border-t border-gray-300 dark:border-gray-600 pt-6 mt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
+                    Warehouse/Store Origin Address
+                  </h3>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Warehouse Name" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Warehouse Name"
+                        name="warehouse_name"
+                        type="text"
+                        placeholder="Test Store Warehouse"
+                      />
+                      <Error errorName={errors.warehouse_name} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Address Line 1" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Address Line 1"
+                        name="warehouse_address_line1"
+                        type="text"
+                        placeholder="250 Front St W"
+                      />
+                      <Error errorName={errors.warehouse_address_line1} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="City" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="City"
+                        name="warehouse_city"
+                        type="text"
+                        placeholder="Toronto"
+                      />
+                      <Error errorName={errors.warehouse_city} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="State/Province" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="State/Province"
+                        name="warehouse_state"
+                        type="text"
+                        placeholder="ON"
+                      />
+                      <Error errorName={errors.warehouse_state} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Postal Code" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Postal Code"
+                        name="warehouse_postal_code"
+                        type="text"
+                        placeholder="M5V 3G5"
+                      />
+                      <Error errorName={errors.warehouse_postal_code} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Country Code" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Country Code"
+                        name="warehouse_country"
+                        type="text"
+                        placeholder="CA"
+                      />
+                      <Error errorName={errors.warehouse_country} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Phone" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Phone"
+                        name="warehouse_phone"
+                        type="text"
+                        placeholder="4161234567"
+                      />
+                      <Error errorName={errors.warehouse_phone} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Email" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Email"
+                        name="warehouse_email"
+                        type="email"
+                        placeholder="warehouse@teststore.com"
+                      />
+                      <Error errorName={errors.warehouse_email} />
+                    </div>
+                  </div>
                 </div>
 
-                {/* EnableTawkChat  section end */}
+                {/* Warehouse/Store Origin Address Section End */}
+
+                {/* Product Defaults Section Start */}
+                <div className="border-t border-gray-300 dark:border-gray-600 pt-6 mt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
+                    Product Default Values
+                  </h3>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Default Product Weight (g)" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Default Product Weight"
+                        name="default_product_weight"
+                        type="number"
+                        placeholder="2"
+                        step="0.1"
+                      />
+                      <Error errorName={errors.default_product_weight} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Default Product Length (cm)" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Default Product Length"
+                        name="default_product_length"
+                        type="number"
+                        placeholder="10"
+                      />
+                      <Error errorName={errors.default_product_length} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Default Product Width (cm)" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Default Product Width"
+                        name="default_product_width"
+                        type="number"
+                        placeholder="10"
+                      />
+                      <Error errorName={errors.default_product_width} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Default Product Height (cm)" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Default Product Height"
+                        name="default_product_height"
+                        type="number"
+                        placeholder="5"
+                      />
+                      <Error errorName={errors.default_product_height} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Default Weight Unit" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Default Weight Unit"
+                        name="default_weight_unit"
+                        type="text"
+                        placeholder="kg"
+                      />
+                      <Error errorName={errors.default_weight_unit} />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Default Dimension Unit" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Default Dimension Unit"
+                        name="default_dim_unit"
+                        type="text"
+                        placeholder="cm"
+                      />
+                      <Error errorName={errors.default_dim_unit} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Product Defaults Section End */}
               </div>
             </SettingContainer>
           </form>
