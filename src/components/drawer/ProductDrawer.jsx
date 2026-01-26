@@ -351,6 +351,50 @@ const ProductDrawer = ({ id }) => {
                   />
                 </div>
               </div>
+
+              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                <LabelArea label="Product Rating" />
+                <div className="col-span-8 sm:col-span-4">
+                  <Input
+                    {...register("rating", {
+                      min: {
+                        value: 0,
+                        message: "Rating must be at least 0",
+                      },
+                      max: {
+                        value: 5,
+                        message: "Rating must be at most 5",
+                      },
+                    })}
+                    name="rating"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="5"
+                    placeholder="e.g. 4.5"
+                  />
+                  <Error errorName={errors.rating} />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                <LabelArea label="Number of Reviews" />
+                <div className="col-span-8 sm:col-span-4">
+                  <Input
+                    {...register("reviewCount", {
+                      min: {
+                        value: 0,
+                        message: "Review count must be at least 0",
+                      },
+                    })}
+                    name="reviewCount"
+                    type="number"
+                    min="0"
+                    placeholder="e.g. 20600"
+                  />
+                  <Error errorName={errors.reviewCount} />
+                </div>
+              </div>
             </div>
           )}
 

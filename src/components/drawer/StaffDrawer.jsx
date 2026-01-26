@@ -176,21 +176,20 @@ const StaffDrawer = ({ id }) => {
                     <Error errorName={errors.role} />
                   </div>
                 </div>
-                {role === "Admin" ||
-                  (role === "Super Admin" && (
-                    <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                      <LabelArea label="Select Routes to given Access" />
-                      <div className="col-span-8 sm:col-span-4">
-                        <MultiSelect
-                          options={routeAccessList}
-                          value={accessedRoutes}
-                          className={mode}
-                          onChange={(v) => setAccessedRoutes(v)}
-                          labelledBy="Select Coupon"
-                        />
-                      </div>
+                {(role === "Admin" || role === "Super Admin") && (
+                  <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <LabelArea label="Select Routes to given Access" />
+                    <div className="col-span-8 sm:col-span-4">
+                      <MultiSelect
+                        options={routeAccessList}
+                        value={accessedRoutes}
+                        className={mode}
+                        onChange={(v) => setAccessedRoutes(v)}
+                        labelledBy="Select Coupon"
+                      />
                     </div>
-                  ))}
+                  </div>
+                )}
               </div>
 
               <DrawerButton

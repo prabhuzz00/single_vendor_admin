@@ -20,7 +20,7 @@ async function fetchFirebaseConfig() {
   try {
     const response = await fetch(
       `${
-        process.env.REACT_APP_API_BASE_URL || "http://localhost:5055"
+        process.env.VITE_APP_API_BASE_URL || "http://localhost:5055"
       }/api/setting/firebase/config`
     );
     if (response.ok) {

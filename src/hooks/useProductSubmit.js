@@ -91,7 +91,7 @@ const useProductSubmit = (id) => {
       if (data.originalPrice < data.price) {
         setIsSubmitting(false);
         return notifyError(
-          "Sale Price must be less then or equal of product price!"
+          "Sale Price must be less then or equal of product price!",
         );
       }
       if (!defaultCategory[0]) {
@@ -103,7 +103,7 @@ const useProductSubmit = (id) => {
       if (isCombination && variants.length === 0 && sizeVariants.length === 0) {
         setIsSubmitting(false);
         return notifyError(
-          "Please add at least one variant or disable combination!"
+          "Please add at least one variant or disable combination!",
         );
       }
 
@@ -132,7 +132,7 @@ const useProductSubmit = (id) => {
         sizeVariants.length > 0 ? processedSizeVariants : updatedVariants;
       const totalStockCalculated = finalVariants.reduce(
         (acc, v) => acc + Number(v.quantity || 0),
-        0
+        0,
       );
 
       console.log("Size Variants:", sizeVariants);
@@ -150,12 +150,12 @@ const useProductSubmit = (id) => {
       const titleTranslates = await handlerTextTranslateHandler(
         data.title,
         language,
-        resData?.title
+        resData?.title,
       );
       const descriptionTranslates = await handlerTextTranslateHandler(
         data.description,
         language,
-        resData?.description
+        resData?.description,
       );
 
       const productData = {
@@ -181,6 +181,8 @@ const useProductSubmit = (id) => {
         stock:
           finalVariants?.length > 0 ? Number(totalStockCalculated) : data.stock,
         tag: JSON.stringify(tag),
+        rating: Number(data.rating) || 0,
+        reviewCount: Number(data.reviewCount) || 0,
 
         prices: {
           price: getNumber(data.price),
@@ -194,7 +196,7 @@ const useProductSubmit = (id) => {
 
       console.log(
         "Product Data to be saved:",
-        JSON.stringify(productData, null, 2)
+        JSON.stringify(productData, null, 2),
       );
 
       // console.log("productData ===========>", productData, "data", data);
@@ -253,7 +255,7 @@ const useProductSubmit = (id) => {
               productId,
               image,
               ...rest
-            }) => rest
+            }) => rest,
           );
 
           setVariant(result);
@@ -355,7 +357,7 @@ const useProductSubmit = (id) => {
             setValue("title", res.title[language ? language : "en"]);
             setValue(
               "description",
-              res.description[language ? language : "en"]
+              res.description[language ? language : "en"],
             );
             setValue("slug", res.slug);
             setValue("show", res.show);
@@ -366,6 +368,8 @@ const useProductSubmit = (id) => {
             setValue("price", res?.prices?.price);
             setValue("originalPrice", res?.prices?.originalPrice);
             setValue("stock", res.stock);
+            setValue("rating", res.rating || 0);
+            setValue("reviewCount", res.reviewCount || 0);
             setProductId(res.productId ? res.productId : res._id);
             setBarcode(res.barcode);
             setSku(res.sku);
@@ -378,7 +382,7 @@ const useProductSubmit = (id) => {
 
             res.category.name = showingTranslateValue(
               res?.category?.name,
-              lang
+              lang,
             );
 
             setSelectedCategory(res.categories);
@@ -447,7 +451,7 @@ const useProductSubmit = (id) => {
         setVariantTitle([sizeAttr]);
         const totalStock = sizeVariants?.reduce(
           (pre, acc) => pre + acc.quantity,
-          0
+          0,
         );
         setTotalStock(Number(totalStock));
       }
@@ -459,7 +463,7 @@ const useProductSubmit = (id) => {
       if (variants?.length > 0) {
         const totalStock = variants?.reduce(
           (pre, acc) => pre + acc.quantity,
-          0
+          0,
         );
         setTotalStock(Number(totalStock));
       }
@@ -503,7 +507,7 @@ const useProductSubmit = (id) => {
         productId,
         image,
         ...rest
-      }) => JSON.stringify({ ...rest }) !== "{}"
+      }) => JSON.stringify({ ...rest }) !== "{}",
     );
 
     // console.log("result", result);
@@ -547,7 +551,7 @@ const useProductSubmit = (id) => {
     setVariant([]);
     setValues({});
     resetRef?.current?.map(
-      async (v, i) => await resetRef?.current[i]?.resetSelectedValues()
+      async (v, i) => await resetRef?.current[i]?.resetSelectedValues(),
     );
 
     // console.log('value', selectedList, removedItem, resetRef.current);
@@ -586,7 +590,7 @@ const useProductSubmit = (id) => {
           ...rest
         } = vari;
         const res = variant.filter(
-          (obj) => JSON.stringify(obj) !== JSON.stringify(rest)
+          (obj) => JSON.stringify(obj) !== JSON.stringify(rest),
         );
         setVariant(res);
         setIsBulkUpdate(true);
@@ -647,12 +651,12 @@ const useProductSubmit = (id) => {
     if (value) {
       if (!value)
         return notifyError(
-          `${"Please save product before adding combinations!"}`
+          `${"Please save product before adding combinations!"}`,
         );
     } else {
       if (!isBasicComplete)
         return notifyError(
-          `${"Please save product before adding combinations!"}`
+          `${"Please save product before adding combinations!"}`,
         );
     }
     setTapValue(e);
@@ -705,12 +709,12 @@ const useProductSubmit = (id) => {
           return updatedCom;
         }
         return com;
-      })
+      }),
     );
 
     const totalStock = variants.reduce(
       (pre, acc) => Number(pre) + Number(acc.quantity),
-      0
+      0,
     );
     setTotalStock(Number(totalStock));
   };

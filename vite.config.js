@@ -15,6 +15,7 @@ export default defineConfig({
   // base: "/", // Set the base URL path for your application
 
   build: {
+    target: "es2020",
     // outDir: "build", // comment this if you select vite as project when deploy
     assetsDir: "@/assets", // Set the directory for the static assets
     // sourcemap: process.env.__DEV__ === "true",

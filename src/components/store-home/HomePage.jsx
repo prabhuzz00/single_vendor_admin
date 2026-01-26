@@ -113,6 +113,8 @@ const HomePage = ({
   setShowcaseEnabled,
   showcaseRightImage,
   setShowcaseRightImage,
+  heroImage,
+  setHeroImage,
 }) => {
   const { mode } = useContext(WindmillContext);
   const { t } = useTranslation();
@@ -458,466 +460,131 @@ const HomePage = ({
           {/*  ================== Menu Editor ======================== */}
         </div>
 
-        {/*  ====================================================== Main Slider ====================================================== */}
+        {/*  ====================================================== Hero Section ====================================================== */}
         <div className="col-span-12 md:col-span-12 lg:col-span-12 mt-5">
           <div className="inline-flex md:text-lg text-base text-gray-800 font-semibold dark:text-gray-400 mb-3">
-            <FiSettings className="mt-1 mr-2" /> {t("MainSlider")}
+            <FiSettings className="mt-1 mr-2" /> {t("HeroSection")}
           </div>
 
           <hr className="mb-3" />
 
           <div className="flex-grow scrollbar-hide w-full max-h-full xl:px-10">
-            <TabsComponent>
-              <Tabs>
-                <TabList>
-                  <Tab>{t("Slider")} 1</Tab>
-                  <Tab>{t("Slider")} 2</Tab>
-                  <Tab>{t("Slider")} 3</Tab>
-                  <Tab>{t("Slider")} 4</Tab>
-                  <Tab>{t("Slider")} 5</Tab>
-                  <Tab>{t("Options")}</Tab>
-                </TabList>
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
+              <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                {t("HeroImage")}
+              </label>
+              <div className="sm:col-span-4">
+                <Uploader
+                  imageUrl={heroImage}
+                  setImageUrl={setHeroImage}
+                  targetWidth={1200}
+                  targetHeight={600}
+                  preserveOriginal={true}
+                />
+              </div>
+            </div>
 
-                <TabPanel className="md:mt-10 mt-3">
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderImages")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <Uploader
-                        imageUrl={sliderImage}
-                        setImageUrl={setSliderImage}
-                        targetWidth={1200}
-                        targetHeight={200}
-                      />
-                    </div>
-                  </div>
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
+              <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1 ">
+                {t("MainTitle")}
+              </label>
+              <div className="sm:col-span-4">
+                <InputAreaTwo
+                  required={true}
+                  register={register}
+                  label={t("MainTitle")}
+                  name="hero_main_title"
+                  type="text"
+                  placeholder="Create Custom Stickers, Labels, Decals & More"
+                />
+                <Error errorName={errors.hero_main_title} />
+              </div>
+            </div>
 
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1 ">
-                      {t("SliderTitle")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        required={true}
-                        register={register}
-                        label={t("SliderTitle")}
-                        name="slider_title"
-                        type="text"
-                        placeholder={t("SliderTitle")}
-                      />
-                      <Error errorName={errors.slider_title} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderDescription")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <TextAreaCom
-                        required={true}
-                        register={register}
-                        label="Slider Description"
-                        name="slider_description"
-                        type="text"
-                        placeholder="Slider Description"
-                      />
-                      <Error errorName={errors.slider_description} />
-                    </div>
-                  </div>
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
+              <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                {t("Description")}
+              </label>
+              <div className="sm:col-span-4">
+                <TextAreaCom
+                  required={true}
+                  register={register}
+                  label="Description"
+                  name="hero_description"
+                  type="text"
+                  placeholder="Easily create & print custom products for your business, brand, and beyond."
+                />
+                <Error errorName={errors.hero_description} />
+              </div>
+            </div>
 
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonName")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        required={true}
-                        register={register}
-                        label={t("SliderButtonName")}
-                        name="slider_button_name"
-                        type="text"
-                        placeholder={t("SliderButtonName")}
-                      />
-                      <Error errorName={errors.slider_button_name} />
-                    </div>
-                  </div>
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
+              <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                {t("Button1Text")}
+              </label>
+              <div className="sm:col-span-4">
+                <InputAreaTwo
+                  required={true}
+                  register={register}
+                  label={t("Button1Text")}
+                  name="hero_button1_text"
+                  type="text"
+                  placeholder="Create Now"
+                />
+                <Error errorName={errors.hero_button1_text} />
+              </div>
+            </div>
 
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonLink")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        required={true}
-                        register={register}
-                        label="Slider Button Link"
-                        name="slider_button_link"
-                        type="text"
-                        placeholder="Slider Button Link"
-                      />
-                      <Error errorName={errors.slider_button_link} />
-                    </div>
-                  </div>
-                </TabPanel>
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
+              <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                {t("Button1Link")}
+              </label>
+              <div className="sm:col-span-4">
+                <InputAreaTwo
+                  required={true}
+                  register={register}
+                  label="Button 1 Link"
+                  name="hero_button1_link"
+                  type="text"
+                  placeholder="/search"
+                />
+                <Error errorName={errors.hero_button1_link} />
+              </div>
+            </div>
 
-                <TabPanel>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderImages")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <Uploader
-                        imageUrl={sliderImageTwo}
-                        setImageUrl={setSliderImageTwo}
-                        targetWidth={1200}
-                        targetHeight={200}
-                      />
-                    </div>
-                  </div>
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
+              <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                {t("Button2Text")}
+              </label>
+              <div className="sm:col-span-4">
+                <InputAreaTwo
+                  required={true}
+                  register={register}
+                  label={t("Button2Text")}
+                  name="hero_button2_text"
+                  type="text"
+                  placeholder="Get A Quote"
+                />
+                <Error errorName={errors.hero_button2_text} />
+              </div>
+            </div>
 
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderTitle")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Title"
-                        name="slider_title_two"
-                        type="text"
-                        placeholder={t("SliderTitle")}
-                      />
-                      <Error errorName={errors.slider_title_two} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderDescription")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <TextAreaCom
-                        register={register}
-                        label="Slider Description Two"
-                        name="slider_description_two"
-                        type="text"
-                        placeholder={t("SliderDescription")}
-                      />
-                      <Error errorName={errors.slider_description_two} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonName")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Name"
-                        name="slider_button_name_two"
-                        type="text"
-                        placeholder={t("SliderButtonName")}
-                      />
-                      <Error errorName={errors.slider_button_name_two} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonLink")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Link"
-                        name="slider_button_link_two"
-                        type="text"
-                        placeholder={t("SliderButtonLink")}
-                      />
-                      <Error errorName={errors.slider_button_link_two} />
-                    </div>
-                  </div>
-                </TabPanel>
-
-                <TabPanel>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderImages")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <Uploader
-                        imageUrl={sliderImageThree}
-                        setImageUrl={setSliderImageThree}
-                        targetWidth={1200}
-                        targetHeight={200}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderTitle")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label=" Slider Title"
-                        name="slider_title_three"
-                        type="text"
-                        placeholder={t("SliderTitle")}
-                      />
-                      <Error errorName={errors.slider_title_three} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderDescription")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <TextAreaCom
-                        register={register}
-                        label="Slider Description"
-                        name="slider_description_three"
-                        type="text"
-                        placeholder={t("SliderDescription")}
-                      />
-
-                      <Error errorName={errors.slider_description_three} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonName")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Name"
-                        name="slider_button_name_three"
-                        type="text"
-                        placeholder={t("SliderButtonName")}
-                      />
-                      <Error errorName={errors.slider_button_name_three} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonLink")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Link"
-                        name="slider_button_link_three"
-                        type="text"
-                        placeholder={t("SliderButtonLink")}
-                      />
-                      <Error errorName={errors.slider_button_link_three} />
-                    </div>
-                  </div>
-                </TabPanel>
-
-                <TabPanel>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderImages")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <Uploader
-                        imageUrl={sliderImageFour}
-                        setImageUrl={setSliderImageFour}
-                        targetWidth={1200}
-                        targetHeight={200}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderTitle")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label=" Slider Title"
-                        name="slider_title_four"
-                        type="text"
-                        placeholder={t("SliderTitle")}
-                      />
-                      <Error errorName={errors.slider_title_four} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderDescription")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <TextAreaCom
-                        register={register}
-                        label="Slider Description"
-                        name="slider_description_four"
-                        type="text"
-                        placeholder={t("SliderDescription")}
-                      />
-                      <Error errorName={errors.slider_description_four} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonName")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Name"
-                        name="slider_button_name_four"
-                        type="text"
-                        placeholder={t("SliderButtonName")}
-                      />
-                      <Error errorName={errors.slider_button_name_four} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonLink")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Link"
-                        name="slider_button_link_four"
-                        type="text"
-                        placeholder={t("SliderButtonLink")}
-                      />
-                      <Error errorName={errors.slider_button_link_four} />
-                    </div>
-                  </div>
-                </TabPanel>
-
-                <TabPanel>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderImages")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <Uploader
-                        imageUrl={sliderImageFive}
-                        setImageUrl={setSliderImageFive}
-                        targetWidth={1200}
-                        targetHeight={200}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderTitle")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label=" Slider Title"
-                        name="slider_title_five"
-                        type="text"
-                        placeholder={t("SliderTitle")}
-                      />
-                      <Error errorName={errors.slider_title_five} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderDescription")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <TextAreaCom
-                        register={register}
-                        label="Slider Description"
-                        name="slider_description_five"
-                        type="text"
-                        placeholder={t("SliderDescription")}
-                      />
-                      <Error errorName={errors.slider_description_five} />
-                    </div>
-                  </div>
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonName")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Name"
-                        name="slider_button_name_five"
-                        type="text"
-                        placeholder={t("SliderButtonName")}
-                      />
-                      <Error errorName={errors.slider_button_name_five} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                      {t("SliderButtonLink")}
-                    </label>
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Slider Button Link"
-                        name="slider_button_link_five"
-                        type="text"
-                        placeholder={t("SliderButtonLink")}
-                      />
-                      <Error errorName={errors.slider_button_link_five} />
-                    </div>
-                  </div>
-                </TabPanel>
-
-                <TabPanel>
-                  <div className="grid md:grid-cols-3 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
-                    <div>
-                      <div className="relative">
-                        <h4 className="font-medium md:text-base text-sm mb-2 dark:text-gray-400">
-                          {" "}
-                          {t("LeftRighArrows")}
-                        </h4>
-                      </div>
-                      <SwitchToggle
-                        title={""}
-                        handleProcess={setLeftRightArrow}
-                        processOption={leftRightArrow}
-                      />
-                    </div>
-                    <div>
-                      <div className="relative">
-                        <h4 className="font-medium md:text-base text-sm mb-2 dark:text-gray-400">
-                          {t("BottomDots")}
-                        </h4>
-                      </div>
-                      <SwitchToggle
-                        title={""}
-                        handleProcess={setBottomDots}
-                        processOption={bottomDots}
-                      />
-                    </div>
-                    <div>
-                      <div className="relative">
-                        <h4 className="font-medium md:text-base text-sm mb-2 dark:text-gray-400">
-                          {t("Both")}
-                        </h4>
-                      </div>
-                      <SwitchToggle
-                        title={""}
-                        handleProcess={setBothSliderOption}
-                        processOption={bothSliderOption}
-                      />
-                    </div>
-                  </div>
-                </TabPanel>
-              </Tabs>
-            </TabsComponent>
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3 relative">
+              <label className="block md:text-sm  md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                {t("Button2Link")}
+              </label>
+              <div className="sm:col-span-4">
+                <InputAreaTwo
+                  required={true}
+                  register={register}
+                  label="Button 2 Link"
+                  name="hero_button2_link"
+                  type="text"
+                  placeholder="/contact-us"
+                />
+                <Error errorName={errors.hero_button2_link} />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -987,10 +654,10 @@ const HomePage = ({
                 height: isCoupon
                   ? "auto"
                   : isSliderFullWidth
-                  ? "auto"
-                  : isSliderFullWidth
-                  ? "auto"
-                  : "auto",
+                    ? "auto"
+                    : isSliderFullWidth
+                      ? "auto"
+                      : "auto",
                 transition: "all 0.5s",
                 visibility: isCoupon ? "hidden" : "visible",
                 opacity: isCoupon ? "0" : "1",

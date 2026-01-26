@@ -12,6 +12,17 @@ const useSettingSubmit = (id) => {
   const [isSave, setIsSave] = useState(true);
   const [enableInvoice, setEnableInvoice] = useState(false);
   const [isAllowAutoTranslation, setIsAllowAutoTranslation] = useState(false);
+  const [sitemapOptions, setSitemapOptions] = useState({
+    include_products: true,
+    include_categories: true,
+    include_static_pages: true,
+    include_blog_posts: false,
+    exclude_out_of_stock: false,
+    exclusion_list: "",
+  });
+  const [sitemapUrl, setSitemapUrl] = useState("");
+
+  // sitemap URLs are not persisted by default; admin UI will show the single sitemap link
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { handleDisableForDemo } = useDisableForDemo();
@@ -56,6 +67,8 @@ const useSettingSubmit = (id) => {
           from_email: data.from_email,
           allow_auto_trans: isAllowAutoTranslation,
           translation_key: data.translation_key,
+          sitemap_options: sitemapOptions,
+          sitemap_url: sitemapUrl,
         },
       };
 
@@ -100,7 +113,7 @@ const useSettingSubmit = (id) => {
           setIsSave(false);
           setValue(
             "number_of_image_per_product",
-            res.number_of_image_per_product
+            res.number_of_image_per_product,
           );
           setValue("shop_name", res.shop_name);
           setValue("address", res.address);
@@ -119,6 +132,20 @@ const useSettingSubmit = (id) => {
           setEnableInvoice(res?.email_to_customer || false);
           setValue("translation_key", res?.translation_key);
           setIsAllowAutoTranslation(res?.allow_auto_trans || false);
+          // sitemap options
+          if (res?.sitemap_options) {
+            setSitemapOptions(res.sitemap_options);
+          }
+          // sitemap url - load or set default
+          if (res?.sitemap_url) {
+            setSitemapUrl(res.sitemap_url);
+          } else {
+            if (typeof window !== "undefined") {
+              setSitemapUrl(
+                `${window.location.protocol}//${window.location.host}/sitemap.xml`,
+              );
+            }
+          }
         }
       } catch (err) {
         notifyError(err?.response?.data?.message || err?.message);
@@ -139,6 +166,10 @@ const useSettingSubmit = (id) => {
     handleSubmit,
     isAllowAutoTranslation,
     setIsAllowAutoTranslation,
+    sitemapOptions,
+    setSitemapOptions,
+    sitemapUrl,
+    setSitemapUrl,
   };
 };
 

@@ -205,6 +205,8 @@ const StoreHome = () => {
     setShowcaseEnabled,
     showcaseRightImage,
     setShowcaseRightImage,
+    heroImage,
+    setHeroImage,
   } = useStoreHomeSubmit();
 
   useEffect(() => {
@@ -510,6 +512,8 @@ const StoreHome = () => {
                   setShowcaseEnabled={setShowcaseEnabled}
                   showcaseRightImage={showcaseRightImage}
                   setShowcaseRightImage={setShowcaseRightImage}
+                  heroImage={heroImage}
+                  setHeroImage={setHeroImage}
                 />
               </form>
             </div>

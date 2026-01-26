@@ -1,262 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { t } from "i18next";
-// import axios from "axios";
-// import { useDropzone } from "react-dropzone";
-// import { DndProvider } from "react-dnd";
-// import { HTML5Backend } from "react-dnd-html5-backend";
-// import { FiUploadCloud, FiXCircle } from "react-icons/fi";
-// import Pica from "pica";
-
-// // Internal imports
-// import useUtilsFunction from "@/hooks/useUtilsFunction";
-// import { notifyError, notifySuccess } from "@/utils/toast";
-// import Container from "@/components/image-uploader/Container";
-
-// const Uploader = ({
-//   setImageUrl,
-//   imageUrl,
-//   product,
-//   folder,
-//   targetWidth = 800, // Set default fixed width
-//   targetHeight = 800, // Set default fixed height
-// }) => {
-//   const [files, setFiles] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [err, setError] = useState("");
-//   const pica = Pica(); // Initialize Pica instance
-//   const { globalSetting } = useUtilsFunction();
-
-//   const { getRootProps, getInputProps, fileRejections } = useDropzone({
-//     accept: {
-//       "image/*": [".jpeg", ".jpg", ".png", ".webp"],
-//     },
-//     multiple: product ? true : false,
-//     maxSize: 5242880, // 5 MB in bytes
-//     maxFiles: globalSetting?.number_of_image_per_product || 2,
-//     onDrop: async (acceptedFiles) => {
-//       const resizedFiles = await Promise.all(
-//         acceptedFiles.map((file) =>
-//           resizeImageToFixedDimensions(file, targetWidth, targetHeight)
-//         )
-//       );
-//       setFiles(
-//         resizedFiles.map((file) =>
-//           Object.assign(file, {
-//             preview: URL.createObjectURL(file),
-//           })
-//         )
-//       );
-//     },
-//   });
-
-//   const resizeImageToFixedDimensions = async (file, width, height) => {
-//     const img = new Image();
-//     img.src = URL.createObjectURL(file);
-
-//     await img.decode();
-
-//     // Calculate scaling to fit within target dimensions while preserving aspect ratio
-//     const scale = Math.min(width / img.width, height / img.height);
-//     const scaledWidth = img.width * scale;
-//     const scaledHeight = img.height * scale;
-
-//     // Create intermediate canvas for scaled image
-//     const scaledCanvas = document.createElement("canvas");
-//     scaledCanvas.width = scaledWidth;
-//     scaledCanvas.height = scaledHeight;
-
-//     // Create final canvas with target dimensions
-//     const finalCanvas = document.createElement("canvas");
-//     finalCanvas.width = width;
-//     finalCanvas.height = height;
-
-//     return new Promise((resolve) => {
-//       pica
-//         .resize(img, scaledCanvas, {
-//           unsharpAmount: 80,
-//           unsharpRadius: 0.6,
-//           unsharpThreshold: 2,
-//         })
-//         .then((result) => {
-//           // Center the scaled image on the final canvas with white background
-//           const ctx = finalCanvas.getContext("2d");
-
-//           // Fill background with white
-//           ctx.fillStyle = "#ffffff";
-//           ctx.fillRect(0, 0, width, height);
-
-//           const x = (width - scaledWidth) / 2;
-//           const y = (height - scaledHeight) / 2;
-//           ctx.drawImage(result, x, y, scaledWidth, scaledHeight);
-
-//           return pica.toBlob(finalCanvas, file.type, 0.9);
-//         })
-//         .then((blob) => {
-//           const resizedFile = new File([blob], file.name, { type: file.type });
-//           resolve(resizedFile);
-//         });
-//     });
-//   };
-
-//   useEffect(() => {
-//     if (fileRejections) {
-//       fileRejections.map(({ file, errors }) => (
-//         <li key={file.path}>
-//           {file.path} - {file.size} bytes
-//           <ul>
-//             {errors.map((e) => (
-//               <li key={e.code}>
-//                 {e.code === "too-many-files"
-//                   ? notifyError(
-//                       `Maximum ${globalSetting?.number_of_image_per_product} Image Can be Upload!`
-//                     )
-//                   : notifyError(e.message)}
-//               </li>
-//             ))}
-//           </ul>
-//         </li>
-//       ));
-//     }
-
-//     if (files) {
-//       files.forEach((file) => {
-//         if (
-//           product &&
-//           imageUrl?.length + files?.length >
-//             globalSetting?.number_of_image_per_product
-//         ) {
-//           return notifyError(
-//             `Maximum ${globalSetting?.number_of_image_per_product} Image Can be Upload!`
-//           );
-//         }
-
-//         setLoading(true);
-//         setError("Uploading....");
-
-//         const name = file.name.replaceAll(/\s/g, "");
-//         const public_id = name?.substring(0, name.lastIndexOf("."));
-
-//         const formData = new FormData();
-//         formData.append("file", file);
-//         formData.append(
-//           "upload_preset",
-//           import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET
-//         );
-//         formData.append("cloud_name", import.meta.env.VITE_APP_CLOUD_NAME);
-//         formData.append("folder", folder);
-//         formData.append("public_id", public_id);
-
-//         axios({
-//           url: import.meta.env.VITE_APP_CLOUDINARY_URL,
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/x-www-form-urlencoded",
-//           },
-//           data: formData,
-//         })
-//           .then((res) => {
-//             notifySuccess("Image Uploaded successfully!");
-//             setLoading(false);
-//             if (product) {
-//               setImageUrl((imgUrl) => [...imgUrl, res.data.secure_url]);
-//             } else {
-//               setImageUrl(res.data.secure_url);
-//             }
-//           })
-//           .catch((err) => {
-//             console.error("err", err);
-//             notifyError(err.Message);
-//             setLoading(false);
-//           });
-//       });
-//     }
-//   }, [files]);
-
-//   const thumbs = files.map((file) => (
-//     <div key={file.name}>
-//       <div>
-//         <img
-//           className="inline-flex border-2 border-gray-100 w-24 max-h-24"
-//           src={file.preview}
-//           alt={file.name}
-//         />
-//       </div>
-//     </div>
-//   ));
-
-//   useEffect(
-//     () => () => {
-//       files.forEach((file) => URL.revokeObjectURL(file.preview));
-//     },
-//     [files]
-//   );
-
-//   const handleRemoveImage = async (img) => {
-//     try {
-//       setLoading(false);
-//       notifyError("Image delete successfully!");
-//       if (product) {
-//         const result = imageUrl?.filter((i) => i !== img);
-//         setImageUrl(result);
-//       } else {
-//         setImageUrl("");
-//       }
-//     } catch (err) {
-//       console.error("err", err);
-//       notifyError(err.Message);
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <div className="w-full text-center">
-//       <div
-//         className="border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
-//         {...getRootProps()}
-//       >
-//         <input {...getInputProps()} />
-//         <span className="mx-auto flex justify-center">
-//           <FiUploadCloud className="text-3xl text-emerald-500" />
-//         </span>
-//         <p className="text-sm mt-2">{t("DragYourImage")}</p>
-//         <em className="text-xs text-gray-400">{t("imageFormat")}</em>
-//       </div>
-
-//       <div className="text-emerald-500">{loading && err}</div>
-//       <aside className="flex flex-row flex-wrap mt-4">
-//         {product ? (
-//           <DndProvider backend={HTML5Backend}>
-//             <Container
-//               setImageUrl={setImageUrl}
-//               imageUrl={imageUrl}
-//               handleRemoveImage={handleRemoveImage}
-//             />
-//           </DndProvider>
-//         ) : !product && imageUrl ? (
-//           <div className="relative">
-//             <img
-//               className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
-//               src={imageUrl}
-//               alt="product"
-//             />
-//             <button
-//               type="button"
-//               className="absolute top-0 right-0 text-red-500 focus:outline-none"
-//               onClick={() => handleRemoveImage(imageUrl)}
-//             >
-//               <FiXCircle />
-//             </button>
-//           </div>
-//         ) : (
-//           thumbs
-//         )}
-//       </aside>
-//     </div>
-//   );
-// };
-
-// export default Uploader;
-
 import React, { useEffect, useState } from "react";
 import { t } from "i18next";
 import axios from "axios";
@@ -276,8 +17,9 @@ const Uploader = ({
   imageUrl,
   product,
   folder,
-  targetWidth = 800, // Set default fixed width
-  targetHeight = 800, // Set default fixed height
+  targetWidth = 270, // Default target width for products (only used if preserveOriginal=false)
+  targetHeight = 270, // Default target height for products (only used if preserveOriginal=false)
+  preserveOriginal = false, // when true, upload the original file without resizing/compression
 }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -290,20 +32,38 @@ const Uploader = ({
       "image/*": [".jpeg", ".jpg", ".png", ".webp"],
     },
     multiple: product ? true : false,
-    maxSize: 5242880, // 5 MB in bytes
+    maxSize: 10485760, // Increased to 10 MB to allow higher quality images
     maxFiles: globalSetting?.number_of_image_per_product || 2,
     onDrop: async (acceptedFiles) => {
+      // If preserveOriginal is requested, skip resizing/compression and upload the original file
+      if (preserveOriginal) {
+        console.log("🔵 ORIGINAL MODE: Uploading files without any resizing");
+        acceptedFiles.forEach((file) => {
+          console.log(
+            `📁 File: ${file.name}, Size: ${(file.size / 1024).toFixed(2)}KB, Type: ${file.type}`,
+          );
+        });
+        setFiles(
+          acceptedFiles.map((file) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            }),
+          ),
+        );
+        return;
+      }
+
       const resizedFiles = await Promise.all(
         acceptedFiles.map((file) =>
-          resizeImageToFixedDimensions(file, targetWidth, targetHeight)
-        )
+          resizeImageToFixedDimensions(file, targetWidth, targetHeight),
+        ),
       );
       setFiles(
         resizedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
-        )
+          }),
+        ),
       );
     },
   });
@@ -311,7 +71,6 @@ const Uploader = ({
   const resizeImageToFixedDimensions = async (file, width, height) => {
     const img = new Image();
     img.src = URL.createObjectURL(file);
-    // Ensure crossOrigin not set here; if images come from local file it's fine.
     await img.decode();
 
     // Calculate scaling to fit within target dimensions while preserving aspect ratio
@@ -319,49 +78,32 @@ const Uploader = ({
     const scaledWidth = Math.max(1, Math.round(img.width * scale));
     const scaledHeight = Math.max(1, Math.round(img.height * scale));
 
-    // Create intermediate canvas for scaled image (exact scaled size)
-    const scaledCanvas = document.createElement("canvas");
-    scaledCanvas.width = scaledWidth;
-    scaledCanvas.height = scaledHeight;
-
-    // Create final canvas with target dimensions (center scaled image here)
+    // Use the scaled dimensions as the canvas size (no padding/letterboxing)
     const finalCanvas = document.createElement("canvas");
-    finalCanvas.width = width;
-    finalCanvas.height = height;
+    finalCanvas.width = scaledWidth;
+    finalCanvas.height = scaledHeight;
 
-    // Choose output type: keep png/webp, otherwise prefer png for logos (better sharpness)
+    // Choose output type: keep original type for best quality
     const originalType = file.type || "image/jpeg";
     const outputType =
       originalType === "image/png" || originalType === "image/webp"
         ? originalType
-        : "image/png";
+        : "image/jpeg";
 
-    // Perform high-quality resize to scaledCanvas, then composite onto finalCanvas
-    await pica.resize(img, scaledCanvas, {
-      unsharpAmount: 80,
+    // Perform high-quality resize directly to final canvas
+    await pica.resize(img, finalCanvas, {
+      unsharpAmount: 160,
       unsharpRadius: 0.6,
-      unsharpThreshold: 2,
+      unsharpThreshold: 1,
+      quality: 3, // Maximum quality (0-3, where 3 is highest)
     });
 
-    const ctx = finalCanvas.getContext("2d");
-    // Fill background white for consistent appearance (prevents dark/transparent bands)
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-
-    const x = Math.round((width - scaledWidth) / 2);
-    const y = Math.round((height - scaledHeight) / 2);
-
-    // draw the scaled canvas onto centered final canvas
-    ctx.drawImage(scaledCanvas, x, y, scaledWidth, scaledHeight);
-
-    // Create blob from final canvas. Use higher quality for lossy formats.
-    const quality =
-      outputType === "image/jpeg" || outputType === "image/webp" ? 0.95 : 0.92;
-
+    // Create blob from canvas with maximum quality
+    const quality = outputType === "image/jpeg" ? 0.95 : 1.0;
     const blob = await pica.toBlob(finalCanvas, outputType, quality);
 
     // Ensure filename extension matches output type
-    const ext = outputType.split("/")[1] || "png";
+    const ext = outputType.split("/")[1] || "jpg";
     const baseName = file.name.replace(/\.[^/.]+$/, "");
     const newName = `${baseName}.${ext}`;
 
@@ -374,7 +116,7 @@ const Uploader = ({
         errors.forEach((e) => {
           if (e.code === "too-many-files") {
             notifyError(
-              `Maximum ${globalSetting?.number_of_image_per_product} Image Can be Upload!`
+              `Maximum ${globalSetting?.number_of_image_per_product} Image Can be Upload!`,
             );
           } else {
             notifyError(e.message);
@@ -393,12 +135,16 @@ const Uploader = ({
           globalSetting?.number_of_image_per_product
       ) {
         return notifyError(
-          `Maximum ${globalSetting?.number_of_image_per_product} Image Can be Upload!`
+          `Maximum ${globalSetting?.number_of_image_per_product} Image Can be Upload!`,
         );
       }
 
       setLoading(true);
       setError("Uploading....");
+
+      console.log(
+        `⬆️ Uploading to Cloudinary: ${file.name}, Size: ${(file.size / 1024).toFixed(2)}KB`,
+      );
 
       const name = file.name.replaceAll(/\s/g, "");
       const public_id = name?.substring(0, name.lastIndexOf(".")) || name;
@@ -407,7 +153,7 @@ const Uploader = ({
       formData.append("file", file);
       formData.append(
         "upload_preset",
-        import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET
+        import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET,
       );
       formData.append("cloud_name", import.meta.env.VITE_APP_CLOUD_NAME);
       formData.append("folder", folder);
@@ -454,7 +200,7 @@ const Uploader = ({
     () => () => {
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     },
-    [files]
+    [files],
   );
 
   const handleRemoveImage = async (img) => {
@@ -476,11 +222,18 @@ const Uploader = ({
 
   return (
     <div className="w-full text-center">
-      {/* Display recommended image size */}
-      {targetWidth && targetHeight && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 text-left">
-          Recommended size: {targetWidth} × {targetHeight} px
+      {/* Display image upload info */}
+      {preserveOriginal ? (
+        <p className="text-xs text-emerald-600 dark:text-emerald-400 mb-2 text-left font-medium">
+          ✓ upload image of size 1200 X 350px or larger for best quality
         </p>
+      ) : (
+        targetWidth &&
+        targetHeight && (
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 text-left">
+            Recommended size: {targetWidth} × {targetHeight} px
+          </p>
+        )
       )}
       <div
         className="border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
@@ -491,7 +244,10 @@ const Uploader = ({
           <FiUploadCloud className="text-3xl text-emerald-500" />
         </span>
         <p className="text-sm mt-2">{t("DragYourImage")}</p>
-        <em className="text-xs text-gray-400">{t("imageFormat")}</em>
+        <em className="text-xs text-gray-400">
+          {t("imageFormat")}
+          {preserveOriginal && " • Original quality preserved"}
+        </em>
       </div>
 
       <div className="text-emerald-500">{loading && err}</div>

@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import { Select } from "@windmill/react-ui";
 
 //internal import
@@ -14,6 +15,7 @@ import SelectTimeZone from "@/components/form/selectOption/SelectTimeZone";
 import SelectCurrency from "@/components/form/selectOption/SelectCurrency";
 import SelectReceiptSize from "@/components/form/selectOption/SelectPrintSize";
 import SelectLanguageThree from "@/components/form/selectOption/SelectLanguageThree";
+import { Button } from "@windmill/react-ui";
 
 const Setting = () => {
   const {
@@ -29,9 +31,14 @@ const Setting = () => {
     setEnableInvoice,
     isAllowAutoTranslation,
     setIsAllowAutoTranslation,
+    sitemapOptions,
+    setSitemapOptions,
+    sitemapUrl,
+    setSitemapUrl,
   } = useSettingSubmit();
 
   const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
 
   return (
     <>
@@ -244,6 +251,161 @@ const Setting = () => {
                       placeholder="Email"
                     />
                     <Error errorName={errors.email} />
+                  </div>
+                </div>
+                {/* Sitemap Settings */}
+                <hr className="my-4" />
+                <div className="text-md font-semibold mb-3">
+                  Sitemap Settings
+                </div>
+
+                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 mb-4">
+                  <label className="block text-sm font-medium text-gray-600 sm:col-span-2">
+                    Include Products
+                  </label>
+                  <div className="sm:col-span-3">
+                    <SwitchToggle
+                      id="sitemap-products"
+                      processOption={sitemapOptions?.include_products}
+                      handleProcess={(v) =>
+                        setSitemapOptions({
+                          ...sitemapOptions,
+                          include_products: v,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 mb-4">
+                  <label className="block text-sm font-medium text-gray-600 sm:col-span-2">
+                    Include Categories
+                  </label>
+                  <div className="sm:col-span-3">
+                    <SwitchToggle
+                      id="sitemap-cats"
+                      processOption={sitemapOptions?.include_categories}
+                      handleProcess={(v) =>
+                        setSitemapOptions({
+                          ...sitemapOptions,
+                          include_categories: v,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 mb-4">
+                  <label className="block text-sm font-medium text-gray-600 sm:col-span-2">
+                    Include Static Pages
+                  </label>
+                  <div className="sm:col-span-3">
+                    <SwitchToggle
+                      id="sitemap-pages"
+                      processOption={sitemapOptions?.include_static_pages}
+                      handleProcess={(v) =>
+                        setSitemapOptions({
+                          ...sitemapOptions,
+                          include_static_pages: v,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 mb-4">
+                  <label className="block text-sm font-medium text-gray-600 sm:col-span-2">
+                    Include Blog Posts
+                  </label>
+                  <div className="sm:col-span-3">
+                    <SwitchToggle
+                      id="sitemap-blog"
+                      processOption={sitemapOptions?.include_blog_posts}
+                      handleProcess={(v) =>
+                        setSitemapOptions({
+                          ...sitemapOptions,
+                          include_blog_posts: v,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 items-start sm:grid-cols-12 gap-3 mb-4">
+                  <label className="block text-sm font-medium text-gray-600 sm:col-span-2">
+                    Exclude Out Of Stock
+                  </label>
+                  <div className="sm:col-span-3">
+                    <SwitchToggle
+                      id="sitemap-oos"
+                      processOption={sitemapOptions?.exclude_out_of_stock}
+                      handleProcess={(v) =>
+                        setSitemapOptions({
+                          ...sitemapOptions,
+                          exclude_out_of_stock: v,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 sm:grid-cols-12 gap-3 mb-6">
+                  <label className="block text-sm font-medium text-gray-600 sm:col-span-2">
+                    Exclusion List (one URL or product ID per line)
+                  </label>
+                  <div className="sm:col-span-3">
+                    <textarea
+                      value={sitemapOptions?.exclusion_list || ""}
+                      onChange={(e) =>
+                        setSitemapOptions({
+                          ...sitemapOptions,
+                          exclusion_list: e.target.value,
+                        })
+                      }
+                      className="w-full border rounded-md p-2 h-28 text-sm"
+                      placeholder="/pages/thank-you\nproduct-12345"
+                    />
+                    <span className="text-xs text-gray-500">
+                      Paste exact paths or product IDs to exclude from sitemap
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 sm:grid-cols-12 gap-3 mb-6">
+                  <label className="block text-sm font-medium text-gray-600 sm:col-span-2">
+                    Sitemap URL
+                  </label>
+                  <div className="sm:col-span-3 flex items-center gap-2">
+                    <input
+                      value={
+                        sitemapUrl ||
+                        `${typeof window !== "undefined" ? `${window.location.protocol}//${window.location.host}/sitemap.xml` : ""}`
+                      }
+                      onChange={(e) => setSitemapUrl(e.target.value)}
+                      className="w-full p-2 border rounded-md"
+                    />
+                    <Button
+                      size="small"
+                      className={copied ? "bg-green-500 text-white" : ""}
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          sitemapUrl ||
+                            `${window.location.protocol}//${window.location.host}/sitemap.xml`,
+                        );
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 3000);
+                      }}
+                    >
+                      {copied ? "Copied" : "Copy"}
+                    </Button>
+                    <a
+                      href="https://search.google.com/search-console"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="ml-2 text-sm text-blue-600"
+                    >
+                      Open Google Search Console
+                    </a>
                   </div>
                 </div>
               </div>
