@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 //internal import
 import Label from "@/components/form/label/Label";
@@ -43,7 +44,12 @@ const StoreSetting = () => {
     setEnabledStallion,
     enabledCloudinary,
     setEnabledCloudinary,
+    phoneCountryCodes,
+    setPhoneCountryCodes,
   } = useStoreSettingSubmit();
+
+  const [newCountryName, setNewCountryName] = useState("");
+  const [newCountryCode, setNewCountryCode] = useState("");
 
   const handleEnableDisableMethod = (checked, event, id) => {
     if (id === "stripe" && !checked) {
@@ -824,6 +830,84 @@ const StoreSetting = () => {
                 {/* END COMMENTED - Tawk Chat section */}
 
                 {/* Warehouse/Store Origin Address Section Start */}
+                <div className="border-b border-gray-300 dark:border-gray-600 pb-6 mb-6">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
+                    Phone Country Codes
+                  </h3>
+
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 mb-4">
+                    <Label label="Country Name" />
+                    <div className="sm:col-span-4 flex gap-3">
+                      <input
+                        className="w-1/2 p-2 border rounded"
+                        value={newCountryName}
+                        onChange={(e) => setNewCountryName(e.target.value)}
+                        placeholder="e.g. India"
+                      />
+                      <input
+                        className="w-1/2 p-2 border rounded"
+                        value={newCountryCode}
+                        onChange={(e) => setNewCountryCode(e.target.value)}
+                        placeholder="e.g. +91"
+                      />
+                      <button
+                        type="button"
+                        className="px-4 py-2 bg-amber-500 text-white rounded"
+                        onClick={() => {
+                          if (!newCountryName || !newCountryCode) return;
+                          const exists = phoneCountryCodes.some(
+                            (c) => c.code === newCountryCode
+                          );
+                          if (exists) {
+                            setNewCountryCode("");
+                            return;
+                          }
+                          setPhoneCountryCodes([
+                            ...phoneCountryCodes,
+                            { name: newCountryName, code: newCountryCode },
+                          ]);
+                          setNewCountryName("");
+                          setNewCountryCode("");
+                        }}
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    {phoneCountryCodes && phoneCountryCodes.length > 0 ? (
+                      <ul className="space-y-2">
+                        {phoneCountryCodes.map((c, idx) => (
+                          <li
+                            key={`${c.code}-${idx}`}
+                            className="flex items-center justify-between p-2 border rounded"
+                          >
+                            <div>
+                              <strong className="mr-2">{c.name}</strong>
+                              <span className="text-sm text-gray-600">{c.code}</span>
+                            </div>
+                            <div>
+                              <button
+                                type="button"
+                                className="px-3 py-1 bg-red-500 text-white rounded"
+                                onClick={() => {
+                                  setPhoneCountryCodes(
+                                    phoneCountryCodes.filter((x) => x.code !== c.code)
+                                  );
+                                }}
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-gray-500">No country codes added yet.</p>
+                    )}
+                  </div>
+                </div>
                 <div className="border-t border-gray-300 dark:border-gray-600 pt-6 mt-6">
                   <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
                     Warehouse/Store Origin Address

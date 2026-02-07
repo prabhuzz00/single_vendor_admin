@@ -24,6 +24,7 @@ const useStoreSettingSubmit = (id) => {
   const [enabledFirebase, setEnabledFirebase] = useState(false);
   const [enabledStallion, setEnabledStallion] = useState(false);
   const [enabledCloudinary, setEnabledCloudinary] = useState(false);
+  const [phoneCountryCodes, setPhoneCountryCodes] = useState([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -105,6 +106,8 @@ const useStoreSettingSubmit = (id) => {
           default_product_height: data.default_product_height || 5,
           default_weight_unit: data.default_weight_unit || "kg",
           default_dim_unit: data.default_dim_unit || "cm",
+          // phone country codes managed by admin
+          phone_country_codes: phoneCountryCodes,
         },
       };
 
@@ -195,6 +198,8 @@ const useStoreSettingSubmit = (id) => {
           setValue("warehouse_country", res.warehouse_country);
           setValue("warehouse_phone", res.warehouse_phone);
           setValue("warehouse_email", res.warehouse_email);
+          // set phone country codes
+          setPhoneCountryCodes(res.phone_country_codes || []);
           // Set product default fields
           setValue("default_product_weight", res.default_product_weight || 0.5);
           setValue("default_product_length", res.default_product_length || 10);
@@ -230,6 +235,8 @@ const useStoreSettingSubmit = (id) => {
     setEnabledStallion,
     enabledCloudinary,
     setEnabledCloudinary,
+    phoneCountryCodes,
+    setPhoneCountryCodes,
     enabledRazorPay,
     setEnabledRazorPay,
     enabledFbPixel,
