@@ -176,7 +176,7 @@ const useStoreSettingSubmit = (id) => {
           setValue("firebase_storage_bucket", res.firebase_storage_bucket);
           setValue(
             "firebase_messaging_sender_id",
-            res.firebase_messaging_sender_id
+            res.firebase_messaging_sender_id,
           );
           setValue("firebase_app_id", res.firebase_app_id);
           setValue("firebase_measurement_id", res.firebase_measurement_id);

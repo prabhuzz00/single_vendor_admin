@@ -856,7 +856,7 @@ const StoreSetting = () => {
                         onClick={() => {
                           if (!newCountryName || !newCountryCode) return;
                           const exists = phoneCountryCodes.some(
-                            (c) => c.code === newCountryCode
+                            (c) => c.code === newCountryCode,
                           );
                           if (exists) {
                             setNewCountryCode("");
@@ -885,7 +885,9 @@ const StoreSetting = () => {
                           >
                             <div>
                               <strong className="mr-2">{c.name}</strong>
-                              <span className="text-sm text-gray-600">{c.code}</span>
+                              <span className="text-sm text-gray-600">
+                                {c.code}
+                              </span>
                             </div>
                             <div>
                               <button
@@ -893,7 +895,9 @@ const StoreSetting = () => {
                                 className="px-3 py-1 bg-red-500 text-white rounded"
                                 onClick={() => {
                                   setPhoneCountryCodes(
-                                    phoneCountryCodes.filter((x) => x.code !== c.code)
+                                    phoneCountryCodes.filter(
+                                      (x) => x.code !== c.code,
+                                    ),
                                   );
                                 }}
                               >
@@ -904,7 +908,9 @@ const StoreSetting = () => {
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-sm text-gray-500">No country codes added yet.</p>
+                      <p className="text-sm text-gray-500">
+                        No country codes added yet.
+                      </p>
                     )}
                   </div>
                 </div>
