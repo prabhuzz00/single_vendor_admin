@@ -348,6 +348,7 @@ const useStoreHomeSubmit = () => {
                 ...resData?.home?.home_showcase?.right_button_text,
                 [language]: data.showcase_right_button_text || "",
               }),
+              right_button_url: data.showcase_right_button_url || "",
               right_image: showcaseRightImage,
             },
           },
@@ -1254,6 +1255,10 @@ const useStoreHomeSubmit = () => {
             "showcase_right_button_text",
             res?.home?.home_showcase?.right_button_text?.[language || "en"] ||
               "",
+          );
+          setValue(
+            "showcase_right_button_url",
+            res?.home?.home_showcase?.right_button_url || "",
           );
           setShowcaseRightImage(res?.home?.home_showcase?.right_image);
 
