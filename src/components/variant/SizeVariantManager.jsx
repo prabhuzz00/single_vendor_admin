@@ -1,3 +1,9 @@
+/**
+ * IMPORTANT: Shipping Properties Units
+ * - Dimensions (Length, Width, Height): INCHES
+ * - Weight: POUNDS (lbs)
+ * These values are stored in the database and sent directly to Stallion Express API with weight_unit=lbs and size_unit=in
+ */
 import React, { useState, useEffect } from "react";
 import { FiPlus, FiTrash2, FiEdit2 } from "react-icons/fi";
 import { Button, Input } from "@windmill/react-ui";
@@ -24,6 +30,10 @@ const SizeVariantManager = ({
         basePrice: defaultPrice,
         discount: 0,
         finalPrice: defaultPrice,
+        length: "",
+        width: "",
+        height: "",
+        weight: "",
       },
     ],
   });
@@ -41,6 +51,20 @@ const SizeVariantManager = ({
       }));
     }
   }, [defaultPrice, editingIndex]);
+
+  // Auto-fill length and width from variant dimensions
+  useEffect(() => {
+    if (currentSize.width && currentSize.height) {
+      setCurrentSize((prev) => ({
+        ...prev,
+        pricingTiers: prev.pricingTiers.map((tier) => ({
+          ...tier,
+          length: tier.length || prev.width,
+          width: tier.width || prev.height,
+        })),
+      }));
+    }
+  }, [currentSize.width, currentSize.height]);
 
   const addSizeVariant = () => {
     if (!currentSize.width || !currentSize.height) {
@@ -61,6 +85,10 @@ const SizeVariantManager = ({
       basePrice: parseFloat(tier.basePrice) || 0,
       discount: parseFloat(tier.discount) || 0,
       finalPrice: parseFloat(tier.finalPrice) || 0,
+      length: parseFloat(tier.length) || 0,
+      width: parseFloat(tier.width) || 0,
+      height: parseFloat(tier.height) || 0,
+      weight: parseFloat(tier.weight) || 0,
     }));
 
     const newVariant = {
@@ -97,6 +125,10 @@ const SizeVariantManager = ({
           basePrice: defaultPrice || 0,
           discount: 0,
           finalPrice: defaultPrice || 0,
+          length: "",
+          width: "",
+          height: "",
+          weight: "",
         },
       ],
     });
@@ -128,6 +160,10 @@ const SizeVariantManager = ({
           basePrice: basePriceToUse,
           discount: 0,
           finalPrice: basePriceToUse,
+          length: currentSize.width || "",
+          width: currentSize.height || "",
+          height: "",
+          weight: "",
         },
       ],
     });
@@ -157,11 +193,11 @@ const SizeVariantManager = ({
     if (field === "discount" || field === "basePrice") {
       const basePrice =
         parseFloat(
-          field === "basePrice" ? value : updated[tierIndex].basePrice
+          field === "basePrice" ? value : updated[tierIndex].basePrice,
         ) || 0;
       const discount =
         parseFloat(
-          field === "discount" ? value : updated[tierIndex].discount
+          field === "discount" ? value : updated[tierIndex].discount,
         ) || 0;
       updated[tierIndex].finalPrice = basePrice - (basePrice * discount) / 100;
     }
@@ -286,7 +322,8 @@ const SizeVariantManager = ({
                 key={index}
                 className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700"
               >
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-end">
+                {/* Pricing Information */}
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-end mb-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
                       Quantity
@@ -366,6 +403,78 @@ const SizeVariantManager = ({
                     )}
                   </div>
                 </div>
+
+                {/* Shipping Properties Section */}
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
+                  <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">
+                    Shipping Properties (for this tier)
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Length (inch)
+                      </label>
+                      <Input
+                        type="number"
+                        step="0.1"
+                        value={tier.length}
+                        onChange={(e) =>
+                          updatePricingTier(index, "length", e.target.value)
+                        }
+                        className="w-full"
+                        placeholder="Add in inch"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Width (inch)
+                      </label>
+                      <Input
+                        type="number"
+                        step="0.1"
+                        value={tier.width}
+                        onChange={(e) =>
+                          updatePricingTier(index, "width", e.target.value)
+                        }
+                        className="w-full"
+                        placeholder="Add in inch"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Height (inch)
+                      </label>
+                      <Input
+                        type="number"
+                        step="0.1"
+                        value={tier.height}
+                        onChange={(e) =>
+                          updatePricingTier(index, "height", e.target.value)
+                        }
+                        className="w-full"
+                        placeholder="Add in inch"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Weight (lbs)
+                      </label>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={tier.weight}
+                        onChange={(e) =>
+                          updatePricingTier(index, "weight", e.target.value)
+                        }
+                        className="w-full"
+                        placeholder="Add in lbs"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -397,6 +506,10 @@ const SizeVariantManager = ({
                       basePrice: defaultPrice || 0,
                       discount: 0,
                       finalPrice: defaultPrice || 0,
+                      length: "",
+                      width: "",
+                      height: "",
+                      weight: "",
                     },
                   ],
                 });
@@ -473,6 +586,23 @@ const SizeVariantManager = ({
                         <div className="text-xs text-gray-500 mt-1">
                           Total: {currency} {calculateTotalPrice(tier)}
                         </div>
+                        {(tier.length ||
+                          tier.width ||
+                          tier.height ||
+                          tier.weight) && (
+                          <div className="text-xs text-blue-600 dark:text-blue-400 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                            <div className="font-medium mb-1">Shipping:</div>
+                            {tier.length && tier.width && tier.height && (
+                              <div>
+                                Dims: {tier.length}×{tier.width}×{tier.height}{" "}
+                                in
+                              </div>
+                            )}
+                            {tier.weight && (
+                              <div>Weight: {tier.weight} lbs</div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
