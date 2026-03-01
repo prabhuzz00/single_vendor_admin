@@ -290,6 +290,129 @@ const StoreSetting = () => {
                       <Error errorName={errors.stallion_webhook_secret} />
                     </div>
                   </div>
+
+                  {/* Warehouse/Store Origin Address Section (for Stallion Shipping) */}
+                  <div className="border-t border-gray-300 dark:border-gray-600 pt-6 mt-6">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
+                      Warehouse/Store Origin Address
+                      <span className="block text-sm font-normal text-gray-600 dark:text-gray-400 mt-1">
+                        Used as the "from" address when creating shipping
+                        labels. Falls back to .env values if not configured.
+                      </span>
+                    </h3>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="Warehouse Name" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="Warehouse Name"
+                          name="warehouse_name"
+                          type="text"
+                          placeholder="Test Store Warehouse"
+                        />
+                        <Error errorName={errors.warehouse_name} />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="Address Line 1" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="Address Line 1"
+                          name="warehouse_address_line1"
+                          type="text"
+                          placeholder="250 Front St W"
+                        />
+                        <Error errorName={errors.warehouse_address_line1} />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="City" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="City"
+                          name="warehouse_city"
+                          type="text"
+                          placeholder="Toronto"
+                        />
+                        <Error errorName={errors.warehouse_city} />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="State/Province" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="State/Province"
+                          name="warehouse_state"
+                          type="text"
+                          placeholder="ON"
+                        />
+                        <Error errorName={errors.warehouse_state} />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="Postal Code" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="Postal Code"
+                          name="warehouse_postal_code"
+                          type="text"
+                          placeholder="M5V 3G5"
+                        />
+                        <Error errorName={errors.warehouse_postal_code} />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="Country Code" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="Country Code"
+                          name="warehouse_country"
+                          type="text"
+                          placeholder="CA"
+                        />
+                        <Error errorName={errors.warehouse_country} />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="Phone" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="Phone"
+                          name="warehouse_phone"
+                          type="text"
+                          placeholder="4161234567"
+                        />
+                        <Error errorName={errors.warehouse_phone} />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                      <Label label="Email" />
+                      <div className="sm:col-span-4">
+                        <InputAreaTwo
+                          register={register}
+                          label="Email"
+                          name="warehouse_email"
+                          type="email"
+                          placeholder="warehouse@teststore.com"
+                        />
+                        <Error errorName={errors.warehouse_email} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Cloudinary Configuration Section */}
@@ -914,125 +1037,6 @@ const StoreSetting = () => {
                     )}
                   </div>
                 </div>
-                <div className="border-t border-gray-300 dark:border-gray-600 pt-6 mt-6">
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
-                    Warehouse/Store Origin Address
-                  </h3>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="Warehouse Name" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Warehouse Name"
-                        name="warehouse_name"
-                        type="text"
-                        placeholder="Test Store Warehouse"
-                      />
-                      <Error errorName={errors.warehouse_name} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="Address Line 1" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Address Line 1"
-                        name="warehouse_address_line1"
-                        type="text"
-                        placeholder="250 Front St W"
-                      />
-                      <Error errorName={errors.warehouse_address_line1} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="City" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="City"
-                        name="warehouse_city"
-                        type="text"
-                        placeholder="Toronto"
-                      />
-                      <Error errorName={errors.warehouse_city} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="State/Province" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="State/Province"
-                        name="warehouse_state"
-                        type="text"
-                        placeholder="ON"
-                      />
-                      <Error errorName={errors.warehouse_state} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="Postal Code" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Postal Code"
-                        name="warehouse_postal_code"
-                        type="text"
-                        placeholder="M5V 3G5"
-                      />
-                      <Error errorName={errors.warehouse_postal_code} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="Country Code" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Country Code"
-                        name="warehouse_country"
-                        type="text"
-                        placeholder="CA"
-                      />
-                      <Error errorName={errors.warehouse_country} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="Phone" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Phone"
-                        name="warehouse_phone"
-                        type="text"
-                        placeholder="4161234567"
-                      />
-                      <Error errorName={errors.warehouse_phone} />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                    <Label label="Email" />
-                    <div className="sm:col-span-4">
-                      <InputAreaTwo
-                        register={register}
-                        label="Email"
-                        name="warehouse_email"
-                        type="email"
-                        placeholder="warehouse@teststore.com"
-                      />
-                      <Error errorName={errors.warehouse_email} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Warehouse/Store Origin Address Section End */}
 
                 {/* Product Defaults Section Start */}
                 <div className="border-t border-gray-300 dark:border-gray-600 pt-6 mt-6">

@@ -119,11 +119,45 @@ const useProductSubmit = (id) => {
       });
 
       // Process size variants if they exist
+      // Ensure pricing tier shipping properties (length, width, height, weight)
+      // are preserved and normalized (numbers) in the payload sent to API.
       const processedSizeVariants = sizeVariants.map((v, i) => {
+        const cleanedTiers = (v.pricingTiers || []).map((tier) => ({
+          ...tier,
+          quantity: Number(tier.quantity || 0),
+          basePrice: tier.basePrice === "" ? 0 : Number(tier.basePrice || 0),
+          finalPrice: tier.finalPrice === "" ? 0 : Number(tier.finalPrice || 0),
+          discount: tier.discount === "" ? 0 : Number(tier.discount || 0),
+          // normalize shipping props - allow null if empty
+          length:
+            tier.length === "" ||
+            tier.length === null ||
+            tier.length === undefined
+              ? null
+              : Number(tier.length),
+          width:
+            tier.width === "" || tier.width === null || tier.width === undefined
+              ? null
+              : Number(tier.width),
+          height:
+            tier.height === "" ||
+            tier.height === null ||
+            tier.height === undefined
+              ? null
+              : Number(tier.height),
+          weight:
+            tier.weight === "" ||
+            tier.weight === null ||
+            tier.weight === undefined
+              ? null
+              : Number(tier.weight),
+        }));
+
         return {
           ...v,
           variantType: "size",
           quantity: Number(v?.quantity || 0),
+          pricingTiers: cleanedTiers,
         };
       });
 

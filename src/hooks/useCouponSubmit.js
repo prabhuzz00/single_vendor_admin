@@ -38,13 +38,13 @@ const useCouponSubmit = (id) => {
       const titleTranslates = await handlerTextTranslateHandler(
         data.title,
         language,
-        resData?.title
+        resData?.title,
       );
 
       const couponData = {
         title: {
           ...titleTranslates,
-          [language]: title,
+          [language]: data.title,
         },
         couponCode: data.couponCode,
         endTime: data.endTime,
@@ -125,7 +125,7 @@ const useCouponSubmit = (id) => {
             setValue("minimumAmount", res.minimumAmount);
             setPublished(res.status === "show" ? true : false);
             setDiscountType(
-              res.discountType?.type === "percentage" ? true : false
+              res.discountType?.type === "percentage" ? true : false,
             );
             setImageUrl(res.logo);
           }

@@ -41,7 +41,7 @@ const OrderInvoice = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data, loading, error } = useAsync(() =>
-    OrderServices.getOrderById(id)
+    OrderServices.getOrderById(id),
   );
 
   const { handleErrorNotification } = useError();
@@ -261,9 +261,19 @@ const OrderInvoice = () => {
                     <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
                       Tracking Number
                     </span>
-                    <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                      {data.shipment.trackingId}
-                    </span>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                        {data.shipment.trackingId}
+                      </span>
+                      <a
+                        href={`https://intelcom.ca/en/track-your-package/?tracking-id=${data.shipment.trackingId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                      >
+                        Track your package here
+                      </a>
+                    </div>
                   </div>
                   <div className="flex flex-col">
                     <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
