@@ -21,6 +21,11 @@ const SelectStatus = ({ id, order }) => {
 
   return (
     <>
+      {order?.cancellationRequested && (
+        <p className="text-xs text-red-500 mb-1 font-medium">
+          ⚠ Customer requested cancellation
+        </p>
+      )}
       <Select
         onChange={(e) => handleChangeStatus(id, e.target.value)}
         className="h-8"

@@ -66,7 +66,7 @@ const Orders = () => {
       startDate: startDate,
       limit: resultsPerPage,
       customerName: searchText,
-    })
+    }),
   );
 
   const { currency, getNumber, getNumberTwo } = useUtilsFunction();
@@ -160,6 +160,9 @@ const Orders = () => {
                       {t("PageOrderProcessing")}
                     </option>
                     <option value="Cancel">{t("OrderCancel")}</option>
+                    <option value="CancellationRequested">
+                      Cancellation Requested
+                    </option>
                   </Select>
                 </div>
 

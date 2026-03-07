@@ -54,7 +54,14 @@ const OrderTable = ({ orders }) => {
             </TableCell>
 
             <TableCell className="text-xs">
-              <Status status={order?.status} />
+              <div className="flex flex-col gap-1">
+                <Status status={order?.status} />
+                {order?.cancellationRequested && (
+                  <span className="inline-block text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded px-2 py-0.5">
+                    Cancellation Requested
+                  </span>
+                )}
+              </div>
             </TableCell>
 
             <TableCell className="text-center">

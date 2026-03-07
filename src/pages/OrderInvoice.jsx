@@ -319,6 +319,42 @@ const OrderInvoice = () => {
           </div>
         )}
       </div>
+      {/* Refund Account Details */}
+      {!loading && !error && data?.refundDetails?.accountNumber && (
+        <div className="bg-white dark:bg-gray-800 mb-4 p-6 rounded-xl shadow-sm">
+          <h3 className="font-bold font-serif text-base uppercase text-gray-700 dark:text-gray-400 mb-4 pb-2 border-b border-gray-100 dark:border-gray-700">
+            Refund Account Details
+          </h3>
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+            <div className="flex flex-col">
+              <span className="mb-1 font-semibold text-xs uppercase text-gray-500 dark:text-gray-400">
+                Account Number
+              </span>
+              <span className="text-sm font-semibold text-gray-800 dark:text-gray-200 tracking-widest">
+                {data.refundDetails.accountNumber}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="mb-1 font-semibold text-xs uppercase text-gray-500 dark:text-gray-400">
+                IFSC Code
+              </span>
+              <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                {data.refundDetails.ifscCode}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="mb-1 font-semibold text-xs uppercase text-gray-500 dark:text-gray-400">
+                Refund Amount
+              </span>
+              <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                {currency}
+                {getNumberTwo(data.refundDetails.refundAmount)}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {!loading && !error && (
         <div className="mb-4 mt-3 flex md:flex-row flex-col items-center justify-between">
           <PDFDownloadLink
