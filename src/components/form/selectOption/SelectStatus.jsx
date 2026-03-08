@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Select } from "@windmill/react-ui";
 
 //internal import
@@ -7,16 +7,22 @@ import { notifySuccess, notifyError } from "@/utils/toast";
 import { SidebarContext } from "@/context/SidebarContext";
 
 const SelectStatus = ({ id, order }) => {
-  // console.log('id',id ,'order',order)
   const { setIsUpdate } = useContext(SidebarContext);
-  const handleChangeStatus = (id, status) => {
-    // return notifyError("This option disabled for this option!");
-    OrderServices.updateOrder(id, { status: status })
+  const [selectedStatus, setSelectedStatus] = useState(order?.status || "");
+  const [saving, setSaving] = useState(false);
+
+  const isDirty = selectedStatus !== order?.status;
+
+  const handleSave = () => {
+    if (!isDirty) return;
+    setSaving(true);
+    OrderServices.updateOrder(id, { status: selectedStatus })
       .then((res) => {
         notifySuccess(res.message);
         setIsUpdate(true);
       })
-      .catch((err) => notifyError(err.message));
+      .catch((err) => notifyError(err.message))
+      .finally(() => setSaving(false));
   };
 
   return (
@@ -26,29 +32,29 @@ const SelectStatus = ({ id, order }) => {
           ⚠ Customer requested cancellation
         </p>
       )}
-      <Select
-        onChange={(e) => handleChangeStatus(id, e.target.value)}
-        className="h-8"
-      >
-        <option value="status" defaultValue hidden>
-          {order?.status}
-        </option>
-        <option defaultValue={order?.status === "Delivered"} value="Delivered">
-          Delivered
-        </option>
-        <option defaultValue={order?.status === "Pending"} value="Pending">
-          Pending
-        </option>
-        <option
-          defaultValue={order?.status === "Processing"}
-          value="Processing"
+      <div className="flex items-center gap-1.5">
+        <Select
+          value={selectedStatus}
+          onChange={(e) => setSelectedStatus(e.target.value)}
+          className="h-8"
         >
-          Processing
-        </option>
-        <option defaultValue={order?.status === "Cancel"} value="Cancel">
-          Cancel
-        </option>
-      </Select>
+          <option value="Pending">Pending</option>
+          <option value="Processing">Processing</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Refunded">Refunded</option>
+        </Select>
+        {isDirty && (
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="h-8 px-2.5 text-xs font-semibold text-white bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 rounded whitespace-nowrap"
+          >
+            {saving ? "..." : "Save"}
+          </button>
+        )}
+      </div>
     </>
   );
 };

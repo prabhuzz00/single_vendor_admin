@@ -7,6 +7,7 @@ import {
   FiSlack,
   FiTarget,
   FiPieChart,
+  FiMail,
 } from "react-icons/fi";
 
 /**
@@ -96,6 +97,11 @@ const sidebar = [
     icon: FiSlack,
     name: "Pages",
     path: "/pages",
+  },
+  {
+    icon: FiMail,
+    name: "Email Templates",
+    path: "/email-templates",
   },
   // {
   //   icon: FiSlack,

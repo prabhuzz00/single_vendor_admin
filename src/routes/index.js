@@ -25,6 +25,7 @@ const Notifications = lazy(() => import("@/pages/Notifications"));
 const CustomProducts = lazy(() => import("@/pages/CustomProducts.jsx"));
 const CookieAnalytics = lazy(() => import("@/pages/CookieAnalytics"));
 const Pages = lazy(() => import("@/pages/Pages"));
+const EmailTemplates = lazy(() => import("@/pages/EmailTemplates"));
 /*
 //  * ⚠ These are internal routes!
 //  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -126,6 +127,10 @@ const routes = [
     path: "/pages",
     component: Pages,
   },
+  {
+    path: "/email-templates",
+    component: EmailTemplates,
+  },
 ];
 
 const routeAccessList = [
@@ -157,6 +162,7 @@ const routeAccessList = [
   { label: "Cookie Analytics", value: "cookie-analytics" },
   { label: "Coming Soon", value: "coming-soon" },
   { label: "Pages", value: "pages" },
+  { label: "Email Templates", value: "email-templates" },
 ];
 
 export { routeAccessList, routes };
