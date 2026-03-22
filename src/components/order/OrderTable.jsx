@@ -23,7 +23,7 @@ const OrderTable = ({ orders }) => {
     <>
       <TableBody className="dark:bg-gray-900">
         {orders?.map((order, i) => (
-          <TableRow key={i + 1}>
+          <TableRow key={order._id || i}>
             <TableCell>
               <span className="font-semibold uppercase text-xs">
                 {order?.invoice}

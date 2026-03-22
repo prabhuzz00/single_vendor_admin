@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Select } from "@windmill/react-ui";
 
 //internal import
@@ -10,6 +10,10 @@ const SelectStatus = ({ id, order }) => {
   const { setIsUpdate } = useContext(SidebarContext);
   const [selectedStatus, setSelectedStatus] = useState(order?.status || "");
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setSelectedStatus(order?.status || "");
+  }, [order?.status]);
 
   const isDirty = selectedStatus !== order?.status;
 
